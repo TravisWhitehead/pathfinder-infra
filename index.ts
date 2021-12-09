@@ -35,15 +35,17 @@ const database = new mysql.Database('pathfinder', {
 });
 */
 
-const size = "t2.micro";     // t2.micro is available in the AWS free tier
-const ami = aws.getAmiOutput({
+const image_name = 'ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129';
+const image_owner = '099720109477';
+const size = "t2.micro";
+
+const ami = pulumi.output(aws.ec2.getAmi({
     filters: [{
         name: "name",
-        values: ["amzn-ami-hvm-*"],
+        values: [image_name],
     }],
-    owners: ["137112412989"], // This owner ID is Amazon
-    mostRecent: true,
-});
+    owners: [image_owner]
+}));
 
 const group = new aws.ec2.SecurityGroup("webserver-secgrp", {
     ingress: [

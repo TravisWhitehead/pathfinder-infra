@@ -35,6 +35,7 @@ const database = new mysql.Database('pathfinder', {
 });
 */
 
+const keypair_name = 'pulumi_key';    // Corresponds to keypair.yml playbook
 const image_name = 'ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129';
 const image_owner = '099720109477';
 const size = "t2.micro";
@@ -55,6 +56,7 @@ const group = new aws.ec2.SecurityGroup("webserver-secgrp", {
 
 const web = new aws.ec2.Instance("web", {
     instanceType: size,
+    keyName: keypair_name,
     vpcSecurityGroupIds: [ group.id ],
     ami: ami.id,
 });

@@ -1,0 +1,37 @@
+---
+
+# TODO: Install newer docker-compose
+# - name: Install docker-compose
+#   apt:
+#     name: docker-compose
+#     state: present
+#   become: yes
+
+- name: Add pathfinder user to docker group
+  ansible.builtin.user:
+    name: "{{ pathfinder_user }}"
+    groups:
+      - docker
+  become: yes
+
+- name: Clone pathfinder-containers
+  git:
+    dest: "{{ pathfinder_dest }}"
+    recursive: yes
+    repo: "{{ pathfinder_repo }}"
+  become: yes
+
+- name: Configure .env for pathfinder-containers
+  copy:
+    src: "pathfinder-env"
+    dest: "{{ pathfinder_dest }}/.env"
+  become: yes
+
+- name: Configure Docker network
+  community.docker.docker_network:
+    name: web
+
+- name: Bring up docker-compose for pathfinder-containers
+  community.docker.docker_compose:
+    project_src: "{{ pathfinder_dest }}"
+    state: present

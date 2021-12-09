@@ -1,0 +1,4 @@
+---
+pathfinder_dest: /opt/pathfinder-containers
+pathfinder_repo: "https://github.com/traviswhitehead/pathfinder-containers.git"
+pathfinder_user: ubuntu

@@ -1,0 +1,34 @@
+---
+- name: Configure Pulumi-managed EC2 instance
+  hosts: localhost
+  vars:
+    keypair_name: pulumi_key
+    keypair_path: ".ec2ssh/{{ keypair_name }}"
+    ssh_user: ubuntu
+  tasks:
+    - name: Gather Pulumi created EC2 instance public IP
+      shell: pulumi stack output publicIp
+      register: pulumi_stack_output
+
+    - set_fact:
+        ec2_public_ip: "{{ pulumi_stack_output.stdout }}"
+
+    - debug:
+        msg: "The public IP of the Pulumi created EC2 instance is: {{ ec2_public_ip }}"
+
+    - name: Gather facts of Pulumi-managed EC2 instance for later
+      setup:
+      changed_when: false
+      delegate_to: "{{ ec2_public_ip }}"
+      vars:
+        ansible_ssh_private_key_file: "{{ keypair_path }}"
+        ansible_user: ubuntu
+
+    - name: Apply pathfinder role
+      import_role:
+        name: pathfinder
+      become: yes
+      delegate_to: "{{ ec2_public_ip }}"
+      vars:
+        ansible_ssh_private_key_file: "{{ keypair_path }}"
+        ansible_user: ubuntu

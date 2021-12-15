@@ -1,4 +1,5 @@
 /bin/
+galaxy_roles/*
 /node_modules/
 .ec2ssh/
 vault-pass

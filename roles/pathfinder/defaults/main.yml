@@ -1,4 +1,9 @@
 ---
+app_user: pathfinder
+
+docker_compose_version: 1.29.2
+docker_users:
+  - "{{ app_user }}"
+
 pathfinder_dest: /opt/pathfinder-containers
 pathfinder_repo: "https://github.com/traviswhitehead/pathfinder-containers.git"
-pathfinder_user: ubuntu

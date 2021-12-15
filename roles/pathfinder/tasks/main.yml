@@ -1,18 +1,18 @@
 ---
 
-# TODO: Install newer docker-compose
-# - name: Install docker-compose
-#   apt:
-#     name: docker-compose
-#     state: present
-#   become: yes
-
-- name: Add pathfinder user to docker group
-  ansible.builtin.user:
-    name: "{{ pathfinder_user }}"
-    groups:
-      - docker
+- name: Install docker-compose
+  import_role:
+    name: geerlingguy.docker
   become: yes
+
+- name: Install pip and docker python packages
+  import_role:
+    name: geerlingguy.pip
+  become: yes
+  vars:
+    pip_install_packages:
+      - name: docker
+      - name: "docker-compose=={{ docker_compose_version }}"
 
 - name: Clone pathfinder-containers
   git:

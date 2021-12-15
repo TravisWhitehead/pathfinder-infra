@@ -1,5 +1,7 @@
 # Galaxy Roles
 
-# https://github.com/singleplatform-eng/ansible-users
 - src: geerlingguy.docker
   version: 4.1.1
+
+- src: geerlingguy.pip
+  version: 2.1.0

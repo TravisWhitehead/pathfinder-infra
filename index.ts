@@ -1,39 +1,34 @@
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
-// import * as mysql from "@pulumi/mysql";
+import * as mysql from "@pulumi/mysql";
 import * as pulumi from "@pulumi/pulumi";
 
-/*
 const config = new pulumi.Config();
 const dbUser = config.require("dbUser");
-const dbPassword = config.requireSecret("dbPassword");
+const dbPassword = config.require("dbPassword");
+const env = config.require("env");
+
+const dbPasswordSecret = new aws.secretsmanager.Secret(`db_password_secret_${env}`);
+new aws.secretsmanager.SecretVersion(`db_password_secret_version_${env}`, {
+    secretId: dbPasswordSecret.id,
+    secretString: dbPassword
+});
 
 const rds = new aws.rds.Instance("db", {
-  engine: "mysql",
+  engine: "mariadb",
   username: dbUser,
   password: dbPassword,
-  availabilityZone: "us-west-2",
+  availabilityZone: "us-west-2c",
   instanceClass: "db.t2.micro",
-  allocatedStorage: 20,
+  allocatedStorage: 10,
   deletionProtection: true,
-
-  // For a VPC cluster, you will also need the following:
-  // dbSubnetGroupName: "sg-db01-replication-1",
-  // vpcSecurityGroupIds: ["sg-c1c63aba"],
 });
 
 const dbProvider = new mysql.Provider("db", {
   endpoint: rds.endpoint,
   username: rds.username,
-  password: rds.password,
+  password: dbPassword,
 });
-
-const database = new mysql.Database("pathfinder", {
-  name: "pathfinder",
-}, {
-  provider: dbProvider
-});
-*/
 
 const keypair_name = "pulumi_key";    // Corresponds to keypair.yml playbook
 const image_name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20211129";
@@ -66,5 +61,6 @@ const web = new aws.ec2.Instance("web", {
     ami: ami.id,
 });
 
+export const dbEndpoint = rds.endpoint;
 export const publicIp = web.publicIp;
 export const publicHostName = web.publicDns;

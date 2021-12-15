@@ -1,2 +1,6 @@
 config:
   aws:region: us-west-2
+  pathfinder:dbPassword:
+    secure: AAABAK2Q1M2mAgPHGEz/HJZd3Hch648czMaXQ5q+YBnpkVrVPB4oYxLndl5DmxPQOmf2UITbCyoA5ICidL3EaQ==
+  pathfinder:dbUser: pathfinder
+  pathfinder:env: dev

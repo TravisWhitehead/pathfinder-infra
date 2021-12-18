@@ -22,8 +22,8 @@
   become: yes
 
 - name: Configure .env for pathfinder-containers
-  copy:
-    src: "pathfinder-env"
+  template:
+    src: "pathfinder-containers-env"
     dest: "{{ pathfinder_dest }}/.env"
   become: yes
 

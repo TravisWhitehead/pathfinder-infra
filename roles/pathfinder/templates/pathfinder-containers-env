@@ -1,0 +1,17 @@
+PROJECT_ROOT="{{ pathfinder_dest }}"
+
+# Docker container name prefix
+CONTAINER_NAME="{{ pathfinder_container_name_prefix }}"
+
+DOMAIN="{{ pathfinder_domain }}"
+
+# Password for /setup
+APP_PASSWORD="{{ pathfinder_app_password }}"
+
+MYSQL_HOST="{{ pathfinder_mysql_host }}"
+MYSQL_PASSWORD="{{ pathfinder_mysql_password }}"
+
+CCP_SSO_CLIENT_ID="{{ pathfinder_ccp_sso_client_id }}"
+CCP_SSO_SECRET_KEY="{{ pathfinder_ccp_sso_secret_key }}"
+
+CCP_ESI_SCOPES="{{ pathfinder_ccp_esi_scopes }}"

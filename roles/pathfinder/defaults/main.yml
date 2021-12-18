@@ -1,5 +1,16 @@
 ---
 docker_compose_version: 1.29.2
 
+# Override in your variables (see group_vars/)
+# pathfinder_app_password: ""
+# pathfinder_ccp_sso_client_id: ""
+# pathfinder_ccp_sso_secret_key: ""
+# pathfinder_mysql_password: ""
+
+pathfinder_ccp_esi_scopes: "esi-location.read_online.v1,esi-location.read_location.v1,esi-location.read_ship_type.v1,esi-ui.write_waypoint.v1,esi-ui.open_window.v1,esi-universe.read_structures.v1,esi-corporations.read_corporation_membership.v1,esi-clones.read_clones.v1,esi-characters.read_corporation_roles.v1"
+
+pathfinder_container_name_prefix: pf
 pathfinder_dest: /opt/pathfinder-containers
+pathfinder_domain: dev.looselyaligned.space
+pathfinder_mysql_host: pfdb
 pathfinder_repo: "https://github.com/traviswhitehead/pathfinder-containers.git"
